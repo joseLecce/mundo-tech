@@ -1,4 +1,5 @@
 let totalCompra = 0
+let arrayProductos = [200,500,150,300]
 
 // ------------------------ INICIO DE DELCARACION DE  FUNCIONES ----------------------------
 
@@ -41,6 +42,7 @@ alert ("Bienvenidos a Mundo-Tech, Ofrecemos los mejores precios y descuentos")
 let producto = parseInt(prompt ("ingrese su Producto: 1- Memoria, 2- Tarjeta Grafica, 3- Almacenamiento, 4-Micro Procesador, 5- Salir"))
 
 
+// uso el valor true para seguir valiando, hasta que un false me haga salir del while y pueda seguir cargando codigos
 
 while (validaCodigo(producto)){
     alert ("Codigo no reconocido, por favor, vuelva a intentar")
@@ -50,13 +52,13 @@ while (validaCodigo(producto)){
 // en este while acumulo los valores de los productos pedidos
 while (producto < 5){
     if (producto == 1){
-        totalCompra = totalCompra + 200
+        totalCompra = totalCompra + arrayProductos[producto-1]
     } else if( producto ==2) {
-        totalCompra = totalCompra + 500
+        totalCompra = totalCompra + arrayProductos[producto-1]
     } else if ( producto == 3){
-        totalCompra = totalCompra + 150
+        totalCompra = totalCompra + arrayProductos[producto-1]
     } else if (producto === 4) {
-        totalCompra = totalCompra + 300
+        totalCompra = totalCompra + arrayProductos[producto-1]
     }
 
 // al finalizar el ciclo, vuelvo a pedir producto y validar el mismo.
