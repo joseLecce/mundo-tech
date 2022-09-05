@@ -1,5 +1,11 @@
 let totalCompra = 0
-let arrayProductos = [200,500,150,300]
+
+const arrayProductos = [{id:1,nombre:'Memoria',precio:200},
+                        {id:2,nombre:'Tarjeta Grafica',precio:500},
+                        {id:3,nombre:'Almacenamiento',precio:150},
+                        {id:4,nombre:'Micro Procesador',precio:300}]
+
+
 
 // ------------------------ INICIO DE DELCARACION DE  FUNCIONES ----------------------------
 
@@ -16,11 +22,14 @@ function validaCodigo (codigo){
 // Funcion para el calculo de descuentos
 function calculoDescuentos (compra){
     if (compra >= 500 && compra <= 1000){
-        return  compra - (compra* 0.10)
+
+        return   compra * 1.10
         } else if (compra > 1000 && compra <= 2000) {
-        return compra - (compra* 0.15) 
+        
+        return compra * 1.15
     } else if (compra > 2000 ) {
-        return compra - (compra* 0.20)
+        
+        return compra * 1.20
         }
     
 }
@@ -30,6 +39,10 @@ function aplicaImpuestos (compra) {
     return compra * 1.25
 }
 
+// Funcion de Grado superior que aplica modificadores al valor bruto de la compra
+function modificaPrecio (compra, modificante){
+    return modificante (compra)
+}
 // ---------------------------- FIN DE DECLARACION DE FUNCIONES --------------------------------------
 
 
@@ -51,15 +64,9 @@ while (validaCodigo(producto)){
 
 // en este while acumulo los valores de los productos pedidos
 while (producto < 5){
-    if (producto == 1){
-        totalCompra = totalCompra + arrayProductos[producto-1]
-    } else if( producto ==2) {
-        totalCompra = totalCompra + arrayProductos[producto-1]
-    } else if ( producto == 3){
-        totalCompra = totalCompra + arrayProductos[producto-1]
-    } else if (producto === 4) {
-        totalCompra = totalCompra + arrayProductos[producto-1]
-    }
+    
+    const auxiliar = arrayProductos.find(obj=>obj.id === producto) // Utilizo una variable auxiliar para poder trabajar el array, eventualmente formare un carrito
+    totalCompra = totalCompra + auxiliar.precio
 
 // al finalizar el ciclo, vuelvo a pedir producto y validar el mismo.
 
@@ -77,13 +84,14 @@ alert ("el total de su compra sin descuentos ni impuestos es de: "+totalCompra)
 
 // Aca calculo y muestro el valor de la compra con los descuentos calculados
 
-totalCompra = calculoDescuentos (totalCompra)
+totalCompra = modificaPrecio (totalCompra,calculoDescuentos)
 alert ("el total de su compra con descuento es de: "+totalCompra) 
 
 
 // aplico impuestos y muestro el total a pagar por el cliente
 
-totalCompra = aplicaImpuestos (totalCompra)
+totalCompra = modificaPrecio (totalCompra,aplicaImpuestos)
+
 
 alert ("el total final a pagar es de: "+totalCompra) 
 
