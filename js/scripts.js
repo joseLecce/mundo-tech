@@ -1,35 +1,32 @@
 let totalCompra = 0
+let carrito = []
 
+// aca recupero el select de mi HTML para poder manipularlo a posterior
+const selector = document.getElementById ('lista')
+
+// el array lo manejo de esta manera para que me sea mas comodo manipularlo a futuro
 const arrayProductos = [{id:1,nombre:'Memoria',precio:200},
                         {id:2,nombre:'Tarjeta Grafica',precio:500},
                         {id:3,nombre:'Almacenamiento',precio:150},
-                        {id:4,nombre:'Micro Procesador',precio:300}]
+                        {id:4,nombre:'Micro-Procesador',precio:300}]
 
 
 
 // ------------------------ INICIO DE DELCARACION DE  FUNCIONES ----------------------------
 
-// Funcion para la  validación del codigo de producto, asegurando que este dentro de los parametros esperados
-function validaCodigo (codigo){
-    if (codigo !== 1 && codigo !== 2 && codigo !== 3 && codigo !== 4 && codigo !== 5){
-        return true
-    } else {
-        return false
-    }
-}
-
-
 // Funcion para el calculo de descuentos
 function calculoDescuentos (compra){
     if (compra >= 500 && compra <= 1000){
 
-        return   compra * 1.10
+        return   compra - (compra * 0.10)
         } else if (compra > 1000 && compra <= 2000) {
         
-        return compra * 1.15
+        return compra - (compra * 0.15)
     } else if (compra > 2000 ) {
         
-        return compra * 1.20
+        return compra - (compra * 0.20)
+        } else {
+            return compra
         }
     
 }
@@ -46,52 +43,66 @@ function modificaPrecio (compra, modificante){
 // ---------------------------- FIN DE DECLARACION DE FUNCIONES --------------------------------------
 
 
+//------------------------------ INICIA CUERPO PRINICIPAL --------------------------------------------
 
 
-alert ("Bienvenidos a Mundo-Tech, Ofrecemos los mejores precios y descuentos")
+//  Agrego productos a mi Option
 
-// aca ingreso codigo de producto, uso el valor "5" como codigo de salida
+arrayProductos.forEach (producto => {
+    const option = document.createElement ('option')
+    option.innerText = `${producto.id}- ${producto.nombre}: $ ${producto.precio}`
+    selector.append (option)
+    } )
 
-let producto = parseInt(prompt ("ingrese su Producto: 1- Memoria, 2- Tarjeta Grafica, 3- Almacenamiento, 4-Micro Procesador, 5- Salir"))
+// Agrego Boton para sumar proctos a Carrito
+
+const botonAgregar = document.createElement ('button')
+botonAgregar.innerText = 'Agregar Producto'
+document.body.append (botonAgregar)
+
+// Agrego boton para finalizar compra y calcular precio
+
+const botonFinalizar = document.createElement ('button')
+botonFinalizar.innerText = 'Finalizar Compra'
+document.body.append (botonFinalizar)
 
 
-// uso el valor true para seguir valiando, hasta que un false me haga salir del while y pueda seguir cargando codigos
+// ------------------------------ EVENTOS ------------------------------
 
-while (validaCodigo(producto)){
-    alert ("Codigo no reconocido, por favor, vuelva a intentar")
-    producto = parseInt(prompt ("ingrese su Producto: 1- Memoria, 2- Tarjeta Grafica, 3- Almacenamiento, 4-Micro Procesador, 5- Salir"))
+// evento para agregar productos al carrito
+
+botonAgregar.onclick = () => {
+    const productoSeccionado = arrayProductos[selector.selectedIndex]
+    carrito.push (productoSeccionado)
 }
 
-// en este while acumulo los valores de los productos pedidos
-while (producto < 5){
-    
-    const auxiliar = arrayProductos.find(obj=>obj.id === producto) // Utilizo una variable auxiliar para poder trabajar el array, eventualmente formare un carrito
-    totalCompra = totalCompra + auxiliar.precio
+// Evento para finalizar compra y calcular precios 
 
-// al finalizar el ciclo, vuelvo a pedir producto y validar el mismo.
-
-    producto = parseInt(prompt ("ingrese su Producto: 1- Memoria, 2- Tarjeta Grafica, 3- Almacenamiento, 4-Micro Procesador, 5- Salir"))
-
-    while (validaCodigo(producto)){
-        alert ("Codigo no reconocido, por favor, vuelva a intentar")
-        producto = parseInt(prompt ("ingrese su Producto: 1- Memoria, 2- Tarjeta Grafica, 3- Almacenamiento, 4-Micro Procesador, 5- Salir"))
-    }
-}
+botonFinalizar.onclick = () => {
+    carrito.forEach ( (producto) =>{
+        totalCompra = totalCompra + producto.precio
+    })
 
 // aca muestro el total parcial de los productos solicitados
 
-alert ("el total de su compra sin descuentos ni impuestos es de: "+totalCompra) 
+const muestraParcial = document.createElement ('p')
+muestraParcial.innerText = `el total de su compra sin descuentos ni impuestos es de: $${totalCompra}`
+document.body.append (muestraParcial)
 
 // Aca calculo y muestro el valor de la compra con los descuentos calculados
 
 totalCompra = modificaPrecio (totalCompra,calculoDescuentos)
-alert ("el total de su compra con descuento es de: "+totalCompra) 
-
+const muestraConDescuentos = document.createElement ('p')
+muestraConDescuentos.innerText = `el total de su compra con los descuentos es de: $${totalCompra}`
+document.body.append (muestraConDescuentos)
 
 // aplico impuestos y muestro el total a pagar por el cliente
 
 totalCompra = modificaPrecio (totalCompra,aplicaImpuestos)
+const muestraPrecioFinal = document.createElement ('p')
+muestraPrecioFinal.innerText = `el total final a pagar es de: $${totalCompra}`
+document.body.append (muestraPrecioFinal)
 
 
-alert ("el total final a pagar es de: "+totalCompra) 
 
+}
