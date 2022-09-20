@@ -1,5 +1,8 @@
 let totalCompra = 0
+let compraDescuentos = 0
+let totalPagar = 0
 let carrito = []
+let carritoSalida = [] 
 
 // aca recupero el select de mi HTML para poder manipularlo a posterior
 const selector = document.getElementById ('lista')
@@ -66,6 +69,11 @@ const botonFinalizar = document.createElement ('button')
 botonFinalizar.innerText = 'Finalizar Compra'
 document.body.append (botonFinalizar)
 
+// Agrego Boton borrar
+const botonBorrar = document.createElement ('button')
+botonBorrar.innerText = 'Borrar Todo'
+document.body.append (botonBorrar)
+
 
 // ------------------------------ EVENTOS ------------------------------
 
@@ -76,33 +84,63 @@ botonAgregar.onclick = () => {
     carrito.push (productoSeccionado)
 }
 
+
+
+
+
 // Evento para finalizar compra y calcular precios 
 
+
 botonFinalizar.onclick = () => {
-    carrito.forEach ( (producto) =>{
+    
+    localStorage.setItem('carritoEntrada', JSON.stringify(carrito))
+
+    carritoSalida = JSON.parse(localStorage.getItem('carritoEntrada'))
+
+    carritoSalida.forEach ( (producto) =>{
         totalCompra = totalCompra + producto.precio
     })
 
-// aca muestro el total parcial de los productos solicitados
+// con este IF me aseguro que no me imprima parrafos si no hay nada comprado o si ya se compro
+if (totalCompra !== 0) {
 
-const muestraParcial = document.createElement ('p')
-muestraParcial.innerText = `el total de su compra sin descuentos ni impuestos es de: $${totalCompra}`
-document.body.append (muestraParcial)
+// recupero el div para mostrar el contenido del carrito
 
-// Aca calculo y muestro el valor de la compra con los descuentos calculados
+const muestraParcial = document.getElementById ('cart')
 
-totalCompra = modificaPrecio (totalCompra,calculoDescuentos)
-const muestraConDescuentos = document.createElement ('p')
-muestraConDescuentos.innerText = `el total de su compra con los descuentos es de: $${totalCompra}`
-document.body.append (muestraConDescuentos)
+// aplico modificaciones al valor inicial
 
-// aplico impuestos y muestro el total a pagar por el cliente
-
-totalCompra = modificaPrecio (totalCompra,aplicaImpuestos)
-const muestraPrecioFinal = document.createElement ('p')
-muestraPrecioFinal.innerText = `el total final a pagar es de: $${totalCompra}`
-document.body.append (muestraPrecioFinal)
+compraDescuentos = modificaPrecio (totalCompra,calculoDescuentos)
 
 
+totalPagar = modificaPrecio (compraDescuentos,aplicaImpuestos)
+
+// inyecto al div carrito los parrafos y muestro los valores que se correpsonden
+
+muestraParcial.innerHTML = `<p class="borrar">el total de su compra sin descuentos ni impuestos es de: $${totalCompra}</p>
+<p class="borrar">el total de su compra con los descuentos es de: $${compraDescuentos}<p>
+<p class="borrar">el total final a pagar es de: $${totalPagar}<p>`
+document.body.appendChild(muestraParcial)
+
+// me aseguro que al finalizar la compra las variables esten a 0
+totalCompra = 0
+carrito = []
+carritoSalida = []
+
+}else {   
+}
 
 }
+
+
+// --------------- EVENTO PARA BORRAR TODO --------------------
+botonBorrar.onclick = () => {
+    totalCompra = 0
+    carrito = []
+    carritoSalida = []
+    localStorage.clear()
+    let variable = document.querySelector("#cart > .borrar")
+    variable.remove()
+    
+}
+
