@@ -139,7 +139,7 @@ botonBorrar.onclick = () => {
     carrito = []
     carritoSalida = []
     localStorage.clear()
-    let variable = document.querySelector("#cart > .borrar")
+    let variable = document.querySelector("#cart")
     variable.remove()
     
 }
