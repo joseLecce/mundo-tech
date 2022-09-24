@@ -43,6 +43,40 @@ function aplicaImpuestos (compra) {
 function modificaPrecio (compra, modificante){
     return modificante (compra)
 }
+
+// Funcion para agregar productos al carrito
+
+
+function agregaEnCarrito (productoParaCarrito){
+    const productoSeccionado = productoParaCarrito
+    carrito.push (productoSeccionado)
+    return 
+}
+
+// Funcion para vaciar Variables y arrays
+
+function borraTodo (){
+    totalCompra = 0
+    carrito = []
+    carritoSalida = []
+    return
+}
+
+
+// Funcion para traer de storage
+
+function traeDeStorage (){
+    const auxiliar =  JSON.parse(localStorage.getItem('carritoEntrada'))
+    return auxiliar
+}
+
+// Funcion que lleva a storage
+
+function llevaHaciaStorage (){
+    localStorage.setItem('carritoEntrada', JSON.stringify(carrito))
+    return
+}
+
 // ---------------------------- FIN DE DECLARACION DE FUNCIONES --------------------------------------
 
 
@@ -80,8 +114,8 @@ document.body.append (botonBorrar)
 // evento para agregar productos al carrito
 
 botonAgregar.onclick = () => {
-    const productoSeccionado = arrayProductos[selector.selectedIndex]
-    carrito.push (productoSeccionado)
+    agregaEnCarrito (arrayProductos[selector.selectedIndex])
+    
 }
 
 
@@ -93,9 +127,9 @@ botonAgregar.onclick = () => {
 
 botonFinalizar.onclick = () => {
     
-    localStorage.setItem('carritoEntrada', JSON.stringify(carrito))
-
-    carritoSalida = JSON.parse(localStorage.getItem('carritoEntrada'))
+    llevaHaciaStorage ()
+    
+    carritoSalida = traeDeStorage ()
 
     carritoSalida.forEach ( (producto) =>{
         totalCompra = totalCompra + producto.precio
@@ -123,9 +157,7 @@ muestraParcial.innerHTML = `<p class="borrar">el total de su compra sin descuent
 document.body.appendChild(muestraParcial)
 
 // me aseguro que al finalizar la compra las variables esten a 0
-totalCompra = 0
-carrito = []
-carritoSalida = []
+borraTodo ()
 
 }else {   
 }
@@ -135,9 +167,7 @@ carritoSalida = []
 
 // --------------- EVENTO PARA BORRAR TODO --------------------
 botonBorrar.onclick = () => {
-    totalCompra = 0
-    carrito = []
-    carritoSalida = []
+    borraTodo ()
     localStorage.clear()
     let variable = document.querySelector("#cart")
     variable.innerText = ""
