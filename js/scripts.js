@@ -115,12 +115,15 @@ document.body.append (botonBorrar)
 
 botonAgregar.onclick = () => {
     agregaEnCarrito (arrayProductos[selector.selectedIndex])
+    Toastify({
+
+        text: "Producto Agregado",
+        
+        duration: 2000
+        
+        }).showToast();
     
 }
-
-
-
-
 
 // Evento para finalizar compra y calcular precios 
 
@@ -128,7 +131,7 @@ botonAgregar.onclick = () => {
 botonFinalizar.onclick = () => {
     
     llevaHaciaStorage ()
-    
+
     carritoSalida = traeDeStorage ()
 
     carritoSalida.forEach ( (producto) =>{
@@ -159,8 +162,15 @@ document.body.appendChild(muestraParcial)
 // me aseguro que al finalizar la compra las variables esten a 0
 borraTodo ()
 
-}else {   
+}else {  
+    Swal.fire({
+        icon: 'warning',
+        title: 'Atención..',
+        text: 'No se puede realizar esta acción',
+        footer: 'La compra ya esta finaliza o no has comprado nada aun'
+    }) 
 }
+
 
 }
 
@@ -171,6 +181,12 @@ botonBorrar.onclick = () => {
     localStorage.clear()
     let variable = document.querySelector("#cart")
     variable.innerText = ""
+    Swal.fire({
+        icon: 'success',
+        title: 'Borrado con exito',
+        showConfirmButton: false,
+        timer : 3000
+        }) 
     
     
 }
