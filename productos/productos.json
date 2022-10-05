@@ -1,0 +1,22 @@
+[
+    {
+        "id": 1,
+        "nombre": "Memoria",
+        "precio": 200
+    },
+    {
+        "id": 2,
+        "nombre": "Tarjeta Grafica",
+        "precio": 500
+    },
+    {
+        "id": 3,
+        "nombre": "Almacenamiento",
+        "precio": 150
+    },
+    {
+        "id": 4,
+        "nombre": "Micro-Procesador",
+        "precio": 300
+    }
+]

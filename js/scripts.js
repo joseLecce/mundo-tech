@@ -6,13 +6,13 @@ let carritoSalida = []
 
 // aca recupero el select de mi HTML para poder manipularlo a posterior
 const selector = document.getElementById ('lista')
-
+/*
 // el array lo manejo de esta manera para que me sea mas comodo manipularlo a futuro
 const arrayProductos = [{id:1,nombre:'Memoria',precio:200},
                         {id:2,nombre:'Tarjeta Grafica',precio:500},
                         {id:3,nombre:'Almacenamiento',precio:150},
                         {id:4,nombre:'Micro-Procesador',precio:300}]
-
+*/
 
 
 // ------------------------ INICIO DE DELCARACION DE  FUNCIONES ----------------------------
@@ -85,7 +85,12 @@ function llevaHaciaStorage (){
 
 //  Agrego productos a mi Option
 
-arrayProductos.forEach (producto => {
+const info = await fetch('./productos/productos.json')
+const infoJson = await info.json()
+
+
+
+infoJson.forEach (producto => {
     const option = document.createElement ('option')
     option.innerText = `${producto.id}- ${producto.nombre}: $ ${producto.precio}`
     selector.append (option)
