@@ -3,16 +3,20 @@ let compraDescuentos = 0
 let totalPagar = 0
 let carrito = []
 let carritoSalida = [] 
+let arrayDesdeFetch = []
 
 // aca recupero el select de mi HTML para poder manipularlo a posterior
 const selector = document.getElementById ('lista')
-/*
-// el array lo manejo de esta manera para que me sea mas comodo manipularlo a futuro
-const arrayProductos = [{id:1,nombre:'Memoria',precio:200},
-                        {id:2,nombre:'Tarjeta Grafica',precio:500},
-                        {id:3,nombre:'Almacenamiento',precio:150},
-                        {id:4,nombre:'Micro-Procesador',precio:300}]
-*/
+
+
+// Traigo el array con el fetch
+
+fetch('./productos/productos.json')
+.then( (res) => res.json())
+.then( (res) => { 
+    arrayDesdeFetch = res}
+    )
+
 
 
 // ------------------------ INICIO DE DELCARACION DE  FUNCIONES ----------------------------
@@ -59,6 +63,7 @@ function borraTodo (){
     totalCompra = 0
     carrito = []
     carritoSalida = []
+    arrayDesdeFetch = []
     return
 }
 
@@ -85,16 +90,20 @@ function llevaHaciaStorage (){
 
 //  Agrego productos a mi Option
 
-const info = await fetch('./productos/productos.json')
-const infoJson = await info.json()
+fetch('./productos/productos.json')
 
+    .then( (res) => res.json())
 
+    .then( (res) => {
 
-infoJson.forEach (producto => {
-    const option = document.createElement ('option')
-    option.innerText = `${producto.id}- ${producto.nombre}: $ ${producto.precio}`
-    selector.append (option)
-    } )
+        const info = res
+        info.forEach (producto => {
+            const option = document.createElement ('option')
+            option.innerText = `${producto.id}- ${producto.nombre}: $ ${producto.precio}`
+            selector.append (option)
+        })
+    })
+
 
 // Agrego Boton para sumar proctos a Carrito
 
@@ -119,7 +128,8 @@ document.body.append (botonBorrar)
 // evento para agregar productos al carrito
 
 botonAgregar.onclick = () => {
-    agregaEnCarrito (arrayProductos[selector.selectedIndex])
+    
+    agregaEnCarrito (arrayDesdeFetch[selector.selectedIndex])
     Toastify({
 
         text: "Producto Agregado",
