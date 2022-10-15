@@ -1,29 +1,64 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="stylesheet" href="./css/style.css">
     <title>Mundo-Tech --- Tu tienda de Tecnologia</title>
 </head>
+
 <body id="body">
-    
-        <h1>MundoTech - Tu Tienda De Tecnologia</h1>
-    
-    
-    
-        <p>Seleccione su producto a comprar:</p>
-    
+
+    <h1 class="d-flex justify-content-center">MundoTech - Tu Tienda De Tecnologia</h1>
+
+
+
+    <p>Seleccione su producto a comprar:</p>
+
     <select name="lista" id="lista"></select>
 
     <div id="cart"></div>
+    <div id="botones"></div>
+    <div id="divMuestra"></div>
 
     </main>
 
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="./js/scripts.js"></script>
 
 </body>
+<footer class="row">
+    <section>
+        <!------------ Aca pongo redes Sociales ------------------>
+
+        <div class="navbar navbar-expand-lg bg-light menuRedes">
+            <div class="container-fluid menuRedes ">
+                <a class="navbar-brand" href="">Redes Sociales</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-link active" aria-current="page" href="http://www.facebook.com"
+                            target="blank">Facebook</a>
+                        <a class="nav-link active" href="http://www.instagram.com" target="blank">Instagram</a>
+                        <a class="nav-link active" href="http://www.twitter.com" target="blank">Twitter</a>
+                        <a class="nav-link active" href="http://www.youtube.com" target="blank">Youtube</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</footer>
+
 </html>
